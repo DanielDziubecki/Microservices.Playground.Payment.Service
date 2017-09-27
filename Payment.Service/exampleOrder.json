@@ -1,0 +1,23 @@
+{
+  "Description": "Super",
+  "ExtOrderId": "8d258c5d142b4fffa2a75a30db531dc1",
+  "TotalAmount": "940",
+  "CustomerIp": "127.0.0.1",
+  "MerchantPosId": "301579",
+  "ContinueUrl": "http://localhost:52520/api/payment",
+  "NotifyUrl": "https://b67d5e1b.ngrok.io/api/payment/notify",
+  "CurrencyCode": "PLN",
+  "Buyer": {
+    "Email": "test@wp.pl",
+    "FirstName": "Daniel",
+    "LastName": "Dziubecki",
+    "Phone": "12332111"
+  },
+  "Products": [
+    {
+      "Name": "Phone",
+      "UnitPrice": "235",
+      "Quantity": "4"
+    }
+  ]
+}
