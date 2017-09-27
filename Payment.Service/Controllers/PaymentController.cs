@@ -22,31 +22,30 @@ namespace Payment.Service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PayForOrder([FromBody] PayUOrder payment, [FromHeader(Name = "operationid")]string operationId)
+        public async Task<IActionResult> PayForOrder([FromBody] PayUOrder payment,
+            [FromHeader(Name = "operationid")] string operationId)
         {
             if (!Guid.TryParse(operationId, out Guid operation))
                 return BadRequest("Operation id should be Guid type.");
-            
-            await busControl.Publish<IPaymentProcessBegin>(new { PaymentId = Guid.NewGuid(), OrderId = payment.ExtOrderId }, context =>
-            {
-                context.Headers.Set(LogConstansts.Common.OperationId, operation);
-                context.Headers.Set(LogConstansts.QueueMessageHeaderNames.Publisher, Request.Path.Value);
-            });
+
+            await busControl.Publish<IPaymentProcessBegin>(
+                new {PaymentId = Guid.NewGuid(), OrderId = payment.ExtOrderId}, context =>
+                {
+                    context.Headers.Set(LogConstansts.Common.OperationId, operation.ToString());
+                    context.Headers.Set(LogConstansts.QueueMessageHeaderNames.Publisher, Request.Path.Value);
+                });
             var paymentServiceUrl = await payUClient.GetPayUOrderUrl(payment);
             return Ok(paymentServiceUrl);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> PayUPaymentResult()
-        {
-            return Ok();
-        }
 
         [HttpGet]
         [Route("notify")]
         public async Task<IActionResult> NotifyEndpoint()
         {
-            var test = Request;
+            // just for testing purpose 
+            await busControl.Publish<IPaymentProcessSucceded>(
+                new {PaymentId = Guid.NewGuid(), OrderId = Guid.NewGuid()});
             return Ok();
         }
     }

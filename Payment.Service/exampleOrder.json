@@ -4,7 +4,7 @@
   "TotalAmount": "940",
   "CustomerIp": "127.0.0.1",
   "MerchantPosId": "301579",
-  "ContinueUrl": "http://localhost:52520/api/payment",
+  "ContinueUrl": "http://localhost:52520/api/notify",
   "NotifyUrl": "https://b67d5e1b.ngrok.io/api/payment/notify",
   "CurrencyCode": "PLN",
   "Buyer": {
